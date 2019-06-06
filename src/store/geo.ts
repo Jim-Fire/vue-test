@@ -1,15 +1,15 @@
 import axios from 'axios';
 import {
-  GeoGetters,
-  GeoActions,
-  GeoMutations,
+  Getters,
+  Actions,
+  Mutations,
   GeoMutation,
   ICountry,
   IState,
   ICity,
   IGeoModule,
-} from 'src/models';
-import { path } from 'src/config';
+} from '@/models';
+import { path } from '@/config';
 
 const state: IGeoModule = {
   countries: [],
@@ -17,13 +17,13 @@ const state: IGeoModule = {
   cities: [],
 };
 
-const getters: GeoGetters = {
+const getters: Getters<IGeoModule> = {
   allCountries: (s) => s.countries,
   allStates: (s) => s.states,
   allCities: (s) => s.cities,
 };
 
-const actions: GeoActions = {
+const actions: Actions<IGeoModule> = {
   async fetchCountries({ commit }) {
     const response = await axios.get(path.base() + path.countries());
     commit(GeoMutation.SET_COUNTRIES, response.data);
@@ -38,7 +38,7 @@ const actions: GeoActions = {
   },
 };
 
-const mutations: GeoMutations = {
+const mutations: Mutations<IGeoModule> = {
   [GeoMutation.SET_COUNTRIES]: (s, countries: ICountry[]) =>
     (s.countries = countries),
   [GeoMutation.SET_STATES]: (s, states: IState[]) => (s.states = states),

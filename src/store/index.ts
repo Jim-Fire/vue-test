@@ -1,7 +1,7 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
-import user from './modules/user';
-import geo from './modules/geo';
+import user from './user';
+import geo from './geo';
 
 // Load Vuex
 Vue.use(Vuex);
