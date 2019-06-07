@@ -1,5 +1,5 @@
 export interface IUser {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     phone_number: string;
@@ -8,5 +8,5 @@ export interface IUser {
     country_id: string;
     state_id: string;
     city_id: string;
-    createdAt: number;
+    createdAt?: number;
 }

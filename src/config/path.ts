@@ -1,5 +1,5 @@
 export const path = {
-    base: (port: number = 4000) => `localhost:${port}/`,
+    base: (port: number = 3000) => `http://localhost:${port}/`,
     countries: () => 'countries',
     states: () => 'states',
     cities: () => 'cities',

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { API } from "@/api";
 import {
   Getters,
   Actions,
@@ -8,8 +8,8 @@ import {
   IState,
   ICity,
   IGeoModule,
-} from '@/models';
-import { path } from '@/config';
+} from "@/models";
+import { path } from "@/config";
 
 const state: IGeoModule = {
   countries: [],
@@ -21,20 +21,36 @@ const getters: Getters<IGeoModule> = {
   allCountries: (s) => s.countries,
   allStates: (s) => s.states,
   allCities: (s) => s.cities,
+  findCountry: (s) => (id: string) => {
+    // tslint:disable-next-line: triple-equals
+    return s.countries.find((c: ICountry) => c.id == id);
+  },
+  findState: (s) => (id: string) => {
+    return s.states.find((s: IState) => s.id === id);
+  },
+  findCities: (s) => (id: string) => {
+    return s.cities.find((c: ICity) => c.id === id);
+  },
+  matchStates: (s) => (selectedCountryId: string) =>
+    s.states.filter(
+      (state: IState) => state.country_id === "" + selectedCountryId,
+    ),
+  matchCities: (s) => (selectedStateId: string) =>
+    s.cities.filter((city: ICity) => city.state_id === selectedStateId),
 };
 
 const actions: Actions<IGeoModule> = {
   async fetchCountries({ commit }) {
-    const response = await axios.get(path.base() + path.countries());
-    commit(GeoMutation.SET_COUNTRIES, response.data);
+    const data = await API.get(path.countries());
+    commit(GeoMutation.SET_COUNTRIES, data);
   },
   async fetchStates({ commit }) {
-    const response = await axios.get(path.base() + path.states());
-    commit(GeoMutation.SET_STATES, response.data);
+    const data = await API.get(path.states());
+    commit(GeoMutation.SET_STATES, data);
   },
   async fetchCities({ commit }) {
-    const response = await axios.get(path.base() + path.cities());
-    commit(GeoMutation.SET_CITIES, response.data);
+    const data = await API.get(path.cities());
+    commit(GeoMutation.SET_CITIES, data);
   },
 };
 
